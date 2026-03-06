@@ -30,9 +30,8 @@ export default function QuizBlock({ questions, onComplete }: Props) {
             setSelectedAnswer(null);
             setShowResult(false);
         } else {
-            const finalScore = selectedAnswer === question.correct ? score + 0 : score; // score already updated
             setFinished(true);
-            onComplete(score + (selectedAnswer === question.correct ? 0 : 0), questions.length);
+            onComplete(score, questions.length);
         }
     };
 

@@ -18,6 +18,7 @@ const BLOCK_TYPES = [
     { value: 'warning', label: '警告' },
     { value: 'image', label: '画像' },
     { value: 'list', label: 'リスト' },
+    { value: 'quiz', label: 'クイズ' },
 ];
 
 export default function EditPage({ course, chapter, nextNumber }: Props) {
@@ -77,6 +78,9 @@ export default function EditPage({ course, chapter, nextNumber }: Props) {
                 break;
             case 'list':
                 newBlock = { type: 'list', items: [''] };
+                break;
+            case 'quiz':
+                newBlock = { type: 'quiz', questions: [{ question: '', options: ['', '', '', ''], correct: 0, explanation: '' }] };
                 break;
             default:
                 return;
@@ -402,6 +406,88 @@ function BlockEditor({ block, onChange }: { block: ContentBlock; onChange: (upda
                         className="text-sm text-primary-600 hover:text-primary-700"
                     >
                         + 項目を追加
+                    </button>
+                </div>
+            );
+
+        case 'quiz':
+            return (
+                <div className="space-y-4">
+                    {block.questions.map((q, qi) => (
+                        <div key={qi} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 space-y-2">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-medium text-gray-500">問題 {qi + 1}</span>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const newQuestions = block.questions.filter((_, idx) => idx !== qi);
+                                        onChange({ questions: newQuestions });
+                                    }}
+                                    className="text-red-400 hover:text-red-600 text-xs"
+                                >
+                                    削除
+                                </button>
+                            </div>
+                            <input
+                                type="text"
+                                value={q.question}
+                                onChange={(e) => {
+                                    const newQuestions = [...block.questions];
+                                    newQuestions[qi] = { ...q, question: e.target.value };
+                                    onChange({ questions: newQuestions });
+                                }}
+                                placeholder="問題文"
+                                className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+                            />
+                            {q.options.map((opt, oi) => (
+                                <div key={oi} className="flex items-center gap-2">
+                                    <input
+                                        type="radio"
+                                        name={`quiz-${qi}-correct`}
+                                        checked={q.correct === oi}
+                                        onChange={() => {
+                                            const newQuestions = [...block.questions];
+                                            newQuestions[qi] = { ...q, correct: oi };
+                                            onChange({ questions: newQuestions });
+                                        }}
+                                    />
+                                    <input
+                                        type="text"
+                                        value={opt}
+                                        onChange={(e) => {
+                                            const newOptions = [...q.options];
+                                            newOptions[oi] = e.target.value;
+                                            const newQuestions = [...block.questions];
+                                            newQuestions[qi] = { ...q, options: newOptions };
+                                            onChange({ questions: newQuestions });
+                                        }}
+                                        placeholder={`選択肢 ${String.fromCharCode(65 + oi)}`}
+                                        className="flex-1 px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+                                    />
+                                </div>
+                            ))}
+                            <textarea
+                                value={q.explanation}
+                                onChange={(e) => {
+                                    const newQuestions = [...block.questions];
+                                    newQuestions[qi] = { ...q, explanation: e.target.value };
+                                    onChange({ questions: newQuestions });
+                                }}
+                                placeholder="解説"
+                                rows={2}
+                                className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+                            />
+                        </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={() => {
+                            const newQuestions = [...block.questions, { question: '', options: ['', '', '', ''], correct: 0, explanation: '' }];
+                            onChange({ questions: newQuestions });
+                        }}
+                        className="text-sm text-primary-600 hover:text-primary-700"
+                    >
+                        + 問題を追加
                     </button>
                 </div>
             );
