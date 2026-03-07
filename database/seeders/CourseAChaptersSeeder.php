@@ -65,13 +65,13 @@ class CourseAChaptersSeeder
                 [
                     'type' => 'code',
                     'language' => 'bash',
-                    'code' => "# Node.js のバージョン確認\nnode -v\n# v18.0.0 以上であることを確認\n\n# Expo プロジェクトの作成\nnpx create-expo-app@latest SpaceInvadersApp --template blank-typescript\n\n# プロジェクトディレクトリに移動\ncd SpaceInvadersApp\n\n# 開発サーバーの起動\nnpx expo start",
+                    'code' => "# Node.js のバージョン確認\nnode -v\n# v18.0.0 以上であることを確認\n\n# Expo プロジェクトの作成（デフォルトで TypeScript 対応）\nnpx create-expo-app@latest SpaceInvadersApp\n\n# プロジェクトディレクトリに移動\ncd SpaceInvadersApp\n\n# 開発サーバーの起動\nnpx expo start",
                 ],
                 [
                     'type' => 'comparison',
                     'title' => 'プロジェクト作成コマンドの比較',
-                    'react' => "# React (Web) プロジェクト作成\nnpx create-react-app my-app --template typescript\ncd my-app\nnpm start",
-                    'reactNative' => "# React Native (Expo) プロジェクト作成\nnpx create-expo-app@latest my-app --template blank-typescript\ncd my-app\nnpx expo start",
+                    'react' => "# React (Web) プロジェクト作成（Vite）\nnpm create vite@latest my-app -- --template react-ts\ncd my-app\nnpm install\nnpm run dev",
+                    'reactNative' => "# React Native (Expo) プロジェクト作成\nnpx create-expo-app@latest my-app\ncd my-app\nnpx expo start",
                 ],
                 [
                     'type' => 'heading',
@@ -1111,7 +1111,7 @@ class CourseAChaptersSeeder
                 [
                     'type' => 'code',
                     'language' => 'json',
-                    'code' => "{\n  \"cli\": {\n    \"version\": \">= 3.0.0\"\n  },\n  \"build\": {\n    \"development\": {\n      \"developmentClient\": true,\n      \"distribution\": \"internal\"\n    },\n    \"preview\": {\n      \"distribution\": \"internal\"\n    },\n    \"production\": {\n      \"ios\": {\n        \"buildNumber\": \"1\"\n      },\n      \"android\": {\n        \"versionCode\": 1\n      }\n    }\n  },\n  \"submit\": {\n    \"production\": {\n      \"ios\": {\n        \"appleId\": \"your-apple-id@example.com\",\n        \"ascAppId\": \"your-app-store-connect-id\"\n      }\n    }\n  }\n}",
+                    'code' => "{\n  \"cli\": {\n    \"version\": \">= 5.0.0\"\n  },\n  \"build\": {\n    \"development\": {\n      \"developmentClient\": true,\n      \"distribution\": \"internal\"\n    },\n    \"preview\": {\n      \"distribution\": \"internal\"\n    },\n    \"production\": {\n      \"ios\": {\n        \"buildNumber\": \"1\"\n      },\n      \"android\": {\n        \"versionCode\": 1\n      }\n    }\n  },\n  \"submit\": {\n    \"production\": {\n      \"ios\": {\n        \"appleId\": \"your-apple-id@example.com\",\n        \"ascAppId\": \"your-app-store-connect-id\"\n      }\n    }\n  }\n}",
                     'filename' => 'eas.json',
                 ],
                 [
